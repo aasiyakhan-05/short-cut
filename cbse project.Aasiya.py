@@ -1,14 +1,30 @@
-import mysql.connector as sql , random , datetime as dt
-import mysql.connector as db
+import random
+import datetime as dt
+import mysql.connector as sql
+
 con=sql.connect(host='localhost',user='root',password='#aasiya!',database='EBS')
 if con.is_connected():
     print("successfully connected")
 else:
     print('error')
-c='YES' or "yes" or 'Yes'
-V='YES' or "yes" or 'Yes'
-cursor=con.cursor() 
-while c=='YES' or "yes" or 'Yes':
+cursor=con.cursor()
+
+def func1():
+    user_no=input("Enter your user number :")
+    user_name=input("Enter your user name :")
+    password=input("Enter your password:")
+    confirm_password=input("Confirm your password:")
+    if password==confirm_password:
+        info1="insert into sign_in values('{}','{}','{}','{}')".format(user_no,user_name,password,confirm_password)
+        cursor.execute(info1)
+        con.commit()
+        c=input("Do you want to continue?(yes or no)")
+    else:
+        print('your confirm password is incorrect')
+        print('Try again')
+        c=input("do you want to try again?(yes or no)")
+
+while True:
     print('--------WELCOME TO ELECTRICITY BILLING SYSTEM !--------')
     print(dt.datetime.now())
     print('1.NEW USER')
@@ -16,26 +32,15 @@ while c=='YES' or "yes" or 'Yes':
     print('3.EXIT')
     choice1=int(input('ENTER YOUR CHOICE:'))
     if choice1==1:
-        user_no=input("Enter your user number :")
-        user_name=input("Enter your user name :")
-        password=input("Enter your password:")
-        confirm_password=input("Confirm your password:")
-        if password==confirm_password:
-            info1="insert into sign_in values('{}','{}','{}','{}')".format(user_no,user_name,password,confirm_password)
-            cursor.execute(info1)
-            con.commit()
-            c=input("Do you want to continue?(yes or no)")
-        else:
-            print('your confirm password is incorrect')
-            print('Try again')
-            c=input("do you want to try again?(yes or no)")
+        func1()
+    
     elif choice1==2:
         user_no=input('Enter your user_no:')
         password=input('Enter your password:')
         info2="select * from sign_in where user_no='{}' and password='{}'".format(user_no,password)
         cursor.execute(info2)
         data=cursor.fetchall()
-        while V=='YES' or "yes" or 'Yes':
+        while True:
             if any (data):
                 print('----------WELCOME TO ELECTRICITY BILLING SYSTEM----------')
                 print("1.ACCOUNT SETTINGS")
