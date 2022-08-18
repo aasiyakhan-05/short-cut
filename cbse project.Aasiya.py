@@ -73,11 +73,7 @@ def func3():
     info3="insert into acc_details values({},{},{},{},{},{},{},{},{})".format(accountno,boxid,bankname,bankbranch,linked_name,address,areacode,phone_no,email,boxid)
     cursor.execute(info3)
     con.commit()
-    V=input("do you want to continue?(yes or no)")
-    if V=='yes':
-        pass
-    else:
-        break
+ 
 
 def func4():
     accountno=int(input('Enter your account number :'))
@@ -98,17 +94,11 @@ def func4():
         cursor.execute(info5)
         data2=cursor.fetchall()
     for row in data2:
-
         print(" Unit : ",row[1])
         print(" Paid on:",row[2])
         print("Amount to be paid without GST:",row[3])
         print("GST=",row[4])
         print("Amount to be paid including GST:",row[5])
-    V=input("do you want to continue?(yes or no)")
-    if V=='yes':
-        continue
-    else:
-        break
 
 def func5():
         info9="select accountno,totalamt from Transaction"
@@ -121,10 +111,6 @@ def func5():
         dt.title("GRAPH")
         dt.show()
         V=input("do you want to continue?(yes or no)")
-        if V=='yes':
-            continue
-        else:
-            break
     
 while True:
     print('--------WELCOME TO ELECTRICITY BILLING SYSTEM !--------')
@@ -153,7 +139,12 @@ while True:
                 while True:
                     if ch==1:
                         func3()
-                        
+                       V=input("do you want to continue?(yes or no)")
+                        if V=='yes':
+                            pass
+                        else:
+                            break
+
                     elif ch==2:
                         func2()
                         V=input("do you want to continue?(yes or no)")
@@ -209,10 +200,19 @@ while True:
                         break
             elif choice==3:
                 func4()
+                V=input("do you want to continue?(yes or no)")
+                if V=='yes':
+                    continue
+                else:
+                    break
 
             elif choice==4:
                 func5()
-                
+                if V=='yes':
+                    continue
+                else:
+                    break
+                  
             elif choice==5:
                 sys.exit( "THANK  YOU FOR VISITING!")
                 sys.exit()
