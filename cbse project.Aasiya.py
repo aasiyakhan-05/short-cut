@@ -48,88 +48,88 @@ def login():  # Log in the user
         break
         
 def func2():
-	acc=input("ENTER YOUR ACCOUNT NUMBER:")
-	use=input("ENTER YOUR USERNAME:")
-	info6=cursor.execute("delete from transaction where accountno='{}'".format(acc))
-	info7=cursor.execute("delete from acc_details where accountno='{}'".format(acc))
-	info8=cursor.execute("delete from sign_in where username='{}'".format(use))
-	cursor.execute(info6)
-	cursor.execute(info7)
-	cursor.execute(info8)
-	con.commit()
-	print("YOUR ACCOUNT IS SUCCESSFULLY DELETED")
-	V=input("do you want to continue?(yes or no)")
-	if V=='yes':
-		continue
-	else:
-		break
+    acc=input("ENTER YOUR ACCOUNT NUMBER:")
+    use=input("ENTER YOUR USERNAME:")
+    info6=cursor.execute("delete from transaction where accountno='{}'".format(acc))
+    info7=cursor.execute("delete from acc_details where accountno='{}'".format(acc))
+    info8=cursor.execute("delete from sign_in where username='{}'".format(use))
+    cursor.execute(info6)
+    cursor.execute(info7)
+    cursor.execute(info8)
+    con.commit()
+    print("YOUR ACCOUNT IS SUCCESSFULLY DELETED")
+    V=input("do you want to continue?(yes or no)")
+    if V=='yes':
+        continue
+    else:
+        break
 
 def func3():
-	accountno(print("your account no is : 644-283-753-1"))
-	boxid=input("Enter your meter box ID :")
-	bankname=input('Enter your BANK NAME :')
-	bankbranch=input('Enter your BANK BRANCH :')
-	linked_name=input('Enter your linked name :')
-	address=input('Enter your permanent address :')
-	areacode=int(input('Enter your area PIN CODE  :'))
-	phone_no=int(input('Enter your PHONE NUMBER  :'))
-	email=input('Enter your valid email address :')
-	info3="insert into acc_details values({},{},{},{},{},{},{},{},{})".format(accountno,boxid,bankname,bankbranch,linked_name,address,areacode,phone_no,email,boxid)
-	cursor.execute(info3)
-	con.commit()
-	V=input("do you want to continue?(yes or no)")
-	if V=='yes':
-		pass
-	else:
-		break
+    accountno(print("your account no is : 644-283-753-1"))
+    boxid=input("Enter your meter box ID :")
+    bankname=input('Enter your BANK NAME :')
+    bankbranch=input('Enter your BANK BRANCH :')
+    linked_name=input('Enter your linked name :')
+    address=input('Enter your permanent address :')
+    areacode=int(input('Enter your area PIN CODE  :'))
+    phone_no=int(input('Enter your PHONE NUMBER  :'))
+    email=input('Enter your valid email address :')
+    info3="insert into acc_details values({},{},{},{},{},{},{},{},{})".format(accountno,boxid,bankname,bankbranch,linked_name,address,areacode,phone_no,email,boxid)
+    cursor.execute(info3)
+    con.commit()
+    V=input("do you want to continue?(yes or no)")
+    if V=='yes':
+        pass
+    else:
+        break
 
 def func4():
-	accountno=int(input('Enter your account number :'))
-	info4="select * from acc_details where accountno=" + str(accountno)
-	cursor.execute(info4)
-	data1=cursor.fetchall()
-	for row in data1:
-		print(" Account Number: ", row[0])
-		print("bankname:",row[1])
-		print("bankbranch:",row[2])
-		print("Linked name:",row[3])
-		print("Your meter device ID=",row[8])
-		print("Residential address:",row[4])
-		print("area code:",row[5])
-		print("phone number:",row[6])
-		print("email:",row[7])
-		info5="select * from Transaction where accountno=" + str(accountno)
-		cursor.execute(info5)
-		data2=cursor.fetchall()
-	for row in data2:
+    accountno=int(input('Enter your account number :'))
+    info4="select * from acc_details where accountno=" + str(accountno)
+    cursor.execute(info4)
+    data1=cursor.fetchall()
+    for row in data1:
+        print(" Account Number: ", row[0])
+        print("bankname:",row[1])
+        print("bankbranch:",row[2])
+        print("Linked name:",row[3])
+        print("Your meter device ID=",row[8])
+        print("Residential address:",row[4])
+        print("area code:",row[5])
+        print("phone number:",row[6])
+        print("email:",row[7])
+        info5="select * from Transaction where accountno=" + str(accountno)
+        cursor.execute(info5)
+        data2=cursor.fetchall()
+    for row in data2:
 
-		print(" Unit : ",row[1])
-		print(" Paid on:",row[2])
-		print("Amount to be paid without GST:",row[3])
-		print("GST=",row[4])
-		print("Amount to be paid including GST:",row[5])
-	V=input("do you want to continue?(yes or no)")
-	if V=='yes':
-		continue
-	else:
-		break
+        print(" Unit : ",row[1])
+        print(" Paid on:",row[2])
+        print("Amount to be paid without GST:",row[3])
+        print("GST=",row[4])
+        print("Amount to be paid including GST:",row[5])
+    V=input("do you want to continue?(yes or no)")
+    if V=='yes':
+        continue
+    else:
+        break
 
 def func5():
-		info9="select accountno,totalamt from Transaction"
-		cursor.execute(info9)
-		L1,L2,=[],[]
-		for i in cursor.fetchall():
-			L1.append(i[0])
-			L2.append(i[1])
-		dt.plot(L1,L2)
-		dt.title("GRAPH")
-		dt.show()
-		V=input("do you want to continue?(yes or no)")
-		if V=='yes':
-			continue
-		else:
-			break
-	
+        info9="select accountno,totalamt from Transaction"
+        cursor.execute(info9)
+        L1,L2,=[],[]
+        for i in cursor.fetchall():
+            L1.append(i[0])
+            L2.append(i[1])
+        dt.plot(L1,L2)
+        dt.title("GRAPH")
+        dt.show()
+        V=input("do you want to continue?(yes or no)")
+        if V=='yes':
+            continue
+        else:
+            break
+    
 while True:
     print('--------WELCOME TO ELECTRICITY BILLING SYSTEM !--------')
     print(dt.datetime.now())
@@ -156,10 +156,10 @@ while True:
                 ch=int(input('ENTER YOUR CHOICE:'))
                 while True:
                     if ch==1:
-						func3()
-						
+                        func3()
+                        
                     elif ch==2:
-						func2()
+                        func2()
                  
             elif choice==2:
                 bank_acc_no=int(input('Enter your account number :'))
@@ -206,15 +206,15 @@ while True:
                     else:
                         break
             elif choice==3:
-				func4()
+                func4()
 
             elif choice==4:
-				func5()
-				
-			elif choice==5:
-				sys.exit( "THANK  YOU FOR VISITING!")
-				sys.exit()
-				
+                func5()
+                
+            elif choice==5:
+                sys.exit( "THANK  YOU FOR VISITING!")
+                sys.exit()
+                
     elif choice1==3:
         sys.exit("THANK YOU FOR VISITING!")
   
