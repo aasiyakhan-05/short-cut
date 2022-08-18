@@ -58,11 +58,7 @@ def func2():
     cursor.execute(info8)
     con.commit()
     print("YOUR ACCOUNT IS SUCCESSFULLY DELETED")
-    V=input("do you want to continue?(yes or no)")
-    if V=='yes':
-        continue
-    else:
-        break
+  
 
 def func3():
     accountno(print("your account no is : 644-283-753-1"))
@@ -160,6 +156,12 @@ while True:
                         
                     elif ch==2:
                         func2()
+                        V=input("do you want to continue?(yes or no)")
+                        if V=='yes':
+                            continue
+                        else:
+                            break
+
                  
             elif choice==2:
                 bank_acc_no=int(input('Enter your account number :'))
