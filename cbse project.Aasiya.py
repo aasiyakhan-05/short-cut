@@ -70,7 +70,8 @@ def func2():
   
 
 def func3():
-    accountno(print("your account no is : 644-283-753-1"))
+    accountno=6442837531
+    print("your account no is : 644-283-753-1")
     boxid=input("Enter your meter box ID :")
     bankname=input('Enter your BANK NAME :')
     bankbranch=input('Enter your BANK BRANCH :')
@@ -90,7 +91,7 @@ def func4():
     cursor.execute(info4)
     data1=cursor.fetchall()
     for row in data1:
-        print(" Account Number: ", row[0])
+        print("Account Number: ", row[0])
         print("bankname:",row[1])
         print("bankbranch:",row[2])
         print("Linked name:",row[3])
@@ -103,8 +104,8 @@ def func4():
     cursor.execute(info5)
     data2=cursor.fetchall()
     for row in data2:
-        print(" Unit : ",row[1])
-        print(" Paid on:",row[2])
+        print("Unit : ",row[1])
+        print("Paid on:",row[2])
         print("Amount to be paid without GST:",row[3])
         print("GST=",row[4])
         print("Amount to be paid including GST:",row[5])
@@ -197,7 +198,7 @@ while True:
                     break
                   
             elif choice==4:
-                sys.exit( "THANK  YOU FOR VISITING!")
+                sys.exit("THANK YOU FOR VISITING!")
                 
     elif choice1==3:
         sys.exit("THANK YOU FOR VISITING!")
