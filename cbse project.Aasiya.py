@@ -29,7 +29,7 @@ def login():  # Log in the user
     user_no = input("Enter your username: ")
     password = input("Enter your password: ")
     cursor.execute("SELECT user_no, password FROM sign_in")
-    rs = db.fetchall()
+    rs = cursor.fetchall()
 
     if len(rs) == 0:
         sys.exit("Username doesn't exist!")
