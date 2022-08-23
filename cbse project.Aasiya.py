@@ -124,6 +124,8 @@ while True:
     
     elif choice1==2:
         c = login()
+        print(c)
+        sys.exit()
         while c:
             print('----------WELCOME TO ELECTRICITY BILLING SYSTEM----------')
             print("1.ACCOUNT SETTINGS")
