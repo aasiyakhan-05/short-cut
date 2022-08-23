@@ -2,12 +2,12 @@ import random
 import sys
 import datetime as dt
 import mysql.connector as sql
-con=sql.connect(host='localhost',user='root',password='root')
+con=sql.connect(host='localhost',user='root',password='#aasiya!')
 cursor=con.cursor()
-cursor.execute("create database ebs")
+cursor.execute("create database if not exists ebs")
 cursor.close()
 con.close()
-con=sql.connect(host='localhost',user='root',password='root',database='EBS')
+con=sql.connect(host='localhost',user='root',password='#aasiya!',database='EBS')
 if con.is_connected():
     print("successfully connected")
 else:
@@ -57,14 +57,16 @@ def login():  # Log in the user
 def func2():
     acc=input("ENTER YOUR ACCOUNT NUMBER:")
     use=input("ENTER YOUR USERNAME:")
-    info6=cursor.execute("delete from transaction where accountno='{}'".format(acc))
+    info6=cursor.execute("delete from transaction where bank_acc_no='{}'".format(acc))
     info7=cursor.execute("delete from acc_details where accountno='{}'".format(acc))
-    info8=cursor.execute("delete from sign_in where username='{}'".format(use))
+    info8=cursor.execute("delete from sign_in where user_name='{}'".format(use))
     cursor.execute(info6)
+    con.commit()
     cursor.execute(info7)
+    con.commit()
     cursor.execute(info8)
     con.commit()
-    print("YOUR ACCOUNT IS SUCCESSFULLY DELETED")
+    sys.exit("YOUR ACCOUNT IS SUCCESSFULLY DELETED")
   
 
 def func3():
@@ -97,9 +99,9 @@ def func4():
         print("area code:",row[5])
         print("phone number:",row[6])
         print("email:",row[7])
-        info5="select * from Transaction where accountno=" + str(accountno)
-        cursor.execute(info5)
-        data2=cursor.fetchall()
+    info5="select * from Transaction where bank_acc_no=" + str(accountno)
+    cursor.execute(info5)
+    data2=cursor.fetchall()
     for row in data2:
         print(" Unit : ",row[1])
         print(" Paid on:",row[2])
@@ -107,18 +109,6 @@ def func4():
         print("GST=",row[4])
         print("Amount to be paid including GST:",row[5])
 
-def func5():
-        info9="select accountno,totalamt from Transaction"
-        cursor.execute(info9)
-        L1,L2,=[],[]
-        for i in cursor.fetchall():
-            L1.append(i[0])
-            L2.append(i[1])
-        dt.plot(L1,L2)
-        dt.title("GRAPH")
-        dt.show()
-        V=input("do you want to continue?(yes or no)")
-    
 while True:
     print('--------WELCOME TO ELECTRICITY BILLING SYSTEM !--------')
     print(dt.datetime.now())
@@ -131,15 +121,12 @@ while True:
     
     elif choice1==2:
         c = login()
-        print(c)
-        sys.exit()
         while c:
             print('----------WELCOME TO ELECTRICITY BILLING SYSTEM----------')
             print("1.ACCOUNT SETTINGS")
             print("2.TRANSACTION")
             print("3.VIEW CUSTOMER DETAILS")
-            print("4.GRAPHICAL REPRESENTATION")
-            print('5.EXIT')
+            print('4.EXIT')
             choice=int(input('ENTER YOUR CHOICE:'))
             if choice==1:
                 print('1.NEW CUSTOMER')
@@ -156,12 +143,6 @@ while True:
 
                     elif ch==2:
                         func2()
-                        V=input("do you want to continue?(yes or no)")
-                        if V=='yes':
-                            continue
-                        else:
-                            break
-
                  
             elif choice==2:
                 bank_acc_no=int(input('Enter your account number :'))
@@ -174,8 +155,8 @@ while True:
                     print('One unit of current is AED 1')
                     amount=1*unit
                     today=dt.date.today()
-                    deadline=dt.date(2022/6/30)
-                    if deadline<today:
+                    deadline='2022/6/30'
+                    if deadline<str(today):
                         fine=(today-deadline)+2
                         totamt=amount+fine
                         print('you have delayed for ',today-deadline,'days.The fine per day is AED 2.')
@@ -193,13 +174,13 @@ while True:
                         GST=(15/100)*amount
                         totalamt=amount+GST
                         print('kindly pay ',totalamt,'AED including GST')
-                        p=input("Please Enter YES to transact")
-                        if p=="YES":
+                        p=input("Please Enter YES to transact :")
+                        if p.upper()=="YES":
                             print("Transaction successful")
                             print("You have paid the bill")
                         else:
                             print('you have to pay the bill soon')
-                    info3="insert into Transaction values({},{},'{}',{},{},{},'{}')".format(bank_acc_no,unit,day,totamt,GST,totalamt,p)
+                    info3="insert into Transaction values('{}','{}','{}','{}','{}','{}')".format(bank_acc_no,unit,deadline,amount,GST,totalamt)
                     cursor.execute(info3)
                     con.commit()
                     V=input("do you want to continue?(yes or no)")
@@ -214,17 +195,9 @@ while True:
                     continue
                 else:
                     break
-
-            elif choice==4:
-                func5()
-                if V=='yes':
-                    continue
-                else:
-                    break
                   
-            elif choice==5:
+            elif choice==4:
                 sys.exit( "THANK  YOU FOR VISITING!")
-                sys.exit()
                 
     elif choice1==3:
         sys.exit("THANK YOU FOR VISITING!")
