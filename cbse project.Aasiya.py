@@ -2,19 +2,20 @@ import random
 import sys
 import datetime as dt
 import mysql.connector as sql
-con=sql.connect(host='localhost',user='root',password='#aasiya!')
+con=sql.connect(host='localhost',user='TP',password='17102005')
 cursor=con.cursor()
 cursor.execute("create database if not exists ebs")
+con.commit()
 cursor.close()
 con.close()
-con=sql.connect(host='localhost',user='root',password='#aasiya!',database='EBS')
+con=sql.connect(host='localhost',user='TP',password='17102005',database='EBS')
 if con.is_connected():
     print("successfully connected")
 else:
     print('error')
 cursor=con.cursor()
 cursor.execute('create table if not exists sign_in(User_no VARCHAR(50) primary key, User_name VARCHAR(100) ,Password VARCHAR(100),Confirm_password VARCHAR(100))')
-cursor.execute('create table if not exists acc_details(accountno int primary key,bankname VARCHAR(25),bankbranch VARCHAR(25),linked_name VARCHAR(25),address VARCHAR(100),areacode INT(6),phone_no INT(15),email VARCHAR(25),boxid VARCHAR(25))')
+cursor.execute('create table if not exists acc_details(accountno bigint primary key,bankname VARCHAR(25),bankbranch VARCHAR(25),linked_name VARCHAR(25),address VARCHAR(100),areacode INT(6),phone_no INT(15),email VARCHAR(25),boxid VARCHAR(25))')
 cursor.execute('create table if not exists transaction(bank_acc_no INT(20) ,unit INT(10),DAY VARCHAR(25),bill_amt INT(10),GST INT(10),totalamt INT(10))')
 
 def func1():
@@ -80,7 +81,7 @@ def func3():
     areacode=int(input('Enter your area PIN CODE  :'))
     phone_no=int(input('Enter your PHONE NUMBER  :'))
     email=input('Enter your valid email address :')
-    info3="insert into acc_details values({},{},{},{},{},{},{},{},{})".format(accountno,boxid,bankname,bankbranch,linked_name,address,areacode,phone_no,email,boxid)
+    info3="insert into acc_details values('{}','{}','{}','{}','{}','{}','{}','{}','{}')".format(accountno,bankname,bankbranch,linked_name,address,areacode,phone_no,email,boxid)
     cursor.execute(info3)
     con.commit()
  
@@ -136,11 +137,7 @@ while True:
                 while True:
                     if ch==1:
                         func3()
-                        V=input("do you want to continue?(yes or no)")
-                        if V=='yes':
-                            pass
-                        else:
-                            break
+                        break
 
                     elif ch==2:
                         func2()
@@ -155,9 +152,9 @@ while True:
                     print('Dear customer, you have used ',unit,'units of electricity.')
                     print('One unit of current is AED 1')
                     amount=1*unit
-                    today=dt.date.today()
-                    deadline='2022/6/30'
-                    if deadline<str(today):
+                    today=str(dt.date.today())
+                    deadline='2022-06-30'
+                    if deadline<today:
                         fine=(today-deadline)+2
                         totamt=amount+fine
                         print('you have delayed for ',today-deadline,'days.The fine per day is AED 2.')
