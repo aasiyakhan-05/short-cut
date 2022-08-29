@@ -15,7 +15,7 @@ else:
     print('error')
 cursor=con.cursor()
 cursor.execute('create table if not exists sign_in(User_no VARCHAR(50) primary key, User_name VARCHAR(100) ,Password VARCHAR(100),Confirm_password VARCHAR(100))')
-cursor.execute('create table if not exists acc_details(accountno bigint primary key,bankname VARCHAR(25),bankbranch VARCHAR(25),linked_name VARCHAR(25),address VARCHAR(100),areacode INT(6),phone_no INT(15),email VARCHAR(25),boxid VARCHAR(25))')
+cursor.execute('create table if not exists acc_details(accountno bigint primary key,bankname VARCHAR(25),bankbranch VARCHAR(25),linked_name VARCHAR(25),address VARCHAR(100),areacode INT(6),phone_no INT(15),email VARCHAR(1000),boxid VARCHAR(25))')
 cursor.execute('create table if not exists transaction(bank_acc_no bigint, unit INT(10),DAY VARCHAR(25),bill_amt INT(10),GST INT(10),totalamt INT(10))')
 
 def func1():
