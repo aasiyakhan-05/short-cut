@@ -1,6 +1,6 @@
 import random
 import sys
-import datetime as dt
+from datetime import *
 import mysql.connector as sql
 con=sql.connect(host='localhost',user='TP',password='17102005')
 cursor=con.cursor()
@@ -16,7 +16,7 @@ else:
 cursor=con.cursor()
 cursor.execute('create table if not exists sign_in(User_no VARCHAR(50) primary key, User_name VARCHAR(100) ,Password VARCHAR(100),Confirm_password VARCHAR(100))')
 cursor.execute('create table if not exists acc_details(accountno bigint primary key,bankname VARCHAR(25),bankbranch VARCHAR(25),linked_name VARCHAR(25),address VARCHAR(100),areacode INT(6),phone_no INT(15),email VARCHAR(25),boxid VARCHAR(25))')
-cursor.execute('create table if not exists transaction(bank_acc_no INT(20) ,unit INT(10),DAY VARCHAR(25),bill_amt INT(10),GST INT(10),totalamt INT(10))')
+cursor.execute('create table if not exists transaction(bank_acc_no bigint, unit INT(10),DAY VARCHAR(25),bill_amt INT(10),GST INT(10),totalamt INT(10))')
 
 def func1():
     user_no=input("Enter your user number :")
@@ -113,7 +113,7 @@ def func4():
 
 while True:
     print('--------WELCOME TO ELECTRICITY BILLING SYSTEM !--------')
-    print(dt.datetime.now())
+    print(datetime.now())
     print('1.NEW USER')
     print('2.EXISTING USER')
     print('3.EXIT')
@@ -143,42 +143,43 @@ while True:
                         func2()
                  
             elif choice==2:
-                bank_acc_no=int(input('Enter your account number :'))
-                info10="select * from transaction where bank_acc_no={}".format(bank_acc_no)
+                accountno=int(input('Enter your account number :'))
+                info10="select * from acc_details where accountno={}".format(accountno)
                 cursor.execute(info10)
                 data1=cursor.fetchall()
                 for row in data1:
                     unit=random.randint(0,101)
-                    print('Dear customer, you have used ',unit,'units of electricity.')
+                    print('Dear customer, you have used',unit,'units of electricity.')
                     print('One unit of current is AED 1')
                     amount=1*unit
-                    today=str(dt.date.today())
-                    deadline='2022-06-30'
-                    if deadline<today:
-                        fine=(today-deadline)+2
+                    today=date.today()
+                    deadline=date(2022, 9, 30)
+                    delay=(deadline - today).days
+                    if int(delay) < 0:
+                        fine=(int((today-deadline).days))*2
                         totamt=amount+fine
-                        print('you have delayed for ',today-deadline,'days.The fine per day is AED 2.')
+                        print('you have delayed for',int((today-deadline).days),'days.The fine per day is AED 2.')
                         GST=(10/100)*totamt
                         totalamt=totamt+GST
-                        print('kindly pay AED ',totalamt,' including GST')
-                        p=input("Please Enter YES to transact")
-                        if p=="YES"or 'Yes'or'yes':
+                        print('kindly pay AED',totalamt,' including GST')
+                        p=input("Please Enter YES to transact: ")
+                        if p.lower()=='yes':
                             print("Transaction successful")
                             print("You have paid the bill")
                         else:
                             print('Transaction incomplete/error')
                     else:
                         totamt=0
-                        GST=(15/100)*amount
+                        GST=(10/100)*amount
                         totalamt=amount+GST
-                        print('kindly pay ',totalamt,'AED including GST')
-                        p=input("Please Enter YES to transact :")
+                        print('kindly pay AED',totalamt,' including GST')
+                        p=input("Please Enter YES to transact: ")
                         if p.upper()=="YES":
                             print("Transaction successful")
                             print("You have paid the bill")
                         else:
                             print('you have to pay the bill soon')
-                    info3="insert into Transaction values('{}','{}','{}','{}','{}','{}')".format(bank_acc_no,unit,deadline,amount,GST,totalamt)
+                    info3="insert into Transaction values('{}','{}','{}','{}','{}','{}')".format(accountno,unit,deadline,amount,GST,totalamt)
                     cursor.execute(info3)
                     con.commit()
                     V=input("do you want to continue?(yes or no)")
